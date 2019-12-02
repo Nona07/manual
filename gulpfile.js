@@ -1,21 +1,20 @@
 const 
 gulp = require('gulp'),
 sass = require('gulp-sass'),
-postcss = require("gulp-postcss"),
-autoprefixer = require("autoprefixer"),
+postcss = require('gulp-postcss'),
+autoprefixer = require('autoprefixer'),
 plumber = require('gulp-plumber'),
-changed = require('gulp-changed'),
 sourcemaps = require('gulp-sourcemaps'),
 browserSync = require('browser-sync'),
 pug  = require('gulp-pug'),
-rename  = require('gulp-rename');
+rename  = require('gulp-rename'),
 pugPHPFilter	= require('pug-php-filter');
 
 // sass
 gulp.task('sass', () => {
   gulp.watch('./scss/**/*.scss', () => {
   // scssファイルからcssファイルを書き出し
-  return gulp.src("./scss/style.scss")
+  return gulp.src('./scss/style.scss')
     .pipe(sourcemaps.init())         // ソースマップ出力のための初期準備
     .pipe(plumber())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
@@ -25,18 +24,18 @@ gulp.task('sass', () => {
 });
 
 //autoprefixer
-gulp.task("autoprefixer",  () => {
-  return gulp.src("./css/style.css")
+gulp.task('autoprefixer',  () => {
+  return gulp.src('./css/style.css')
     .pipe(postcss([
       autoprefixer({
-        browsers: ["last 4 versions", "ie >= 11", "iOS >= 8" , "Android >= 4"],
+        browsers: [ 'last 4 versions', 'ie >= 11', 'iOS >= 8' , 'Android >= 4'],
         cascade: false
       })
     ]))
-    .pipe(gulp.dest('./css'));
+  .pipe(gulp.dest('./css'));
 });
 
-gulp.task( 'pug', () => {
+gulp.task('pug', () => {
   let option = {
 		pretty: true,
 		filters: {
@@ -55,21 +54,19 @@ gulp.task( 'pug', () => {
 });
 
 gulp.task('watch', () => {
-
   // scssファイルが変更されたらsassタスクを実行
-  gulp.watch("./scss/**/*.scss", gulp.task('sass'));
-  gulp.watch("./scss/**/*.scss", gulp.task('autoprefixer'));
+  gulp.watch('./scss/**/*.scss', gulp.task('sass'));
+  gulp.watch('./scss/**/*.scss', gulp.task('autoprefixer'));
   // pugファイルが変更されたらpugタスクを実行
   gulp.watch([ 'pug/**/*.pug', '!pug/**/_*.pug' ], gulp.task('pug'));
   // phpファイルとcssファイルが変更されたら、ブラウザをリロード
   gulp.watch(['./*.html', './*.php', './css/*.css', './js/*.js']).on('change', browserSync.reload);
-
 });
 
 gulp.task('serve', () => {
   // WordPress開発環境と連携のためプロキシを使用
   browserSync.init({
-      proxy: "localhost/projectFolder/"
+      proxy: 'localhost/projectFolder/'
   });
 });
 
