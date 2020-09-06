@@ -7,7 +7,7 @@ npm init -y
 
 Gulpのインストール
 
-npm install -D gulp
+npm install gulp
 
 npm install gulp-sass --save-dev
 npm install gulp-postcss --save-dev
